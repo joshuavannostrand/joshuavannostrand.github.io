@@ -1,15 +1,7 @@
 (() => {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
   const panels = [...document.querySelectorAll('.hero, .pagehead')];
-  if (!reduce.matches) {
-    const reveal = document.querySelectorAll('.section .wrap');
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-        if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
-      }), { threshold: .08 });
-      reveal.forEach(el => { el.classList.add('reveal'); observer.observe(el); });
-    }
-  }
+  // Keep all page content visible immediately, independent of animation.
   if (reduce.matches || !panels.length) return;
   const state = panels.map(panel => {
     const canvas = document.createElement('canvas');
